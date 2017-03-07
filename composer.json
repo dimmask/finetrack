@@ -1,0 +1,23 @@
+{
+    "name": "dimmask/finetrack",
+    "description": "International shipments tracking tools library",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Davidov Dmitry",
+            "email": "deavenor.encarna@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Dimmask\\Finetrack\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=7.0",
+        "ext-soap": "*",
+        "ext-curl": "*"
+    }
+}
