@@ -1,6 +1,7 @@
 <?php
 
 namespace Dimmask\Finetrack;
+
 use Dimmask\Finetrack\Adapter\AdapterInterface;
 use Dimmask\Finetrack\Exception\InvalidTrackAdapterException;
 
@@ -68,9 +69,25 @@ class TrackService
 
     /**
      * Track shipment using each of registered providers
+     *
+     * @param string
+     * @param array
+     *
+     * @return array
      */
     public function track($barcode, $params = []): array
     {
-        //@TODO: Each provider
+        $results = [];
+        $providers = $this->config['providers'] ?? [];
+        if(!empty($providers)){
+            foreach($providers as $provider => $settings){
+                $result = $this->makeAdapter($provider)->track($barcode, $params);
+                if($result->found){
+                    $results[] = $result;
+                }
+            }
+        }
+
+        return $results;
     }
 }

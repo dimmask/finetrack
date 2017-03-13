@@ -9,6 +9,11 @@ namespace Dimmask\Finetrack;
 class TrackResult
 {
     /**
+     * @var bool    Flag if shipment was found
+     */
+    public $found = false;
+
+    /**
      * @var string  Original barcode
      */
     public $barcode = '';
@@ -26,6 +31,6 @@ class TrackResult
     /**
      * @var Additional information
      */
-    public $additional;
+    public $additional = [];
 
 }

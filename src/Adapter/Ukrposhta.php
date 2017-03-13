@@ -56,7 +56,7 @@ class Ukrposhta implements AdapterInterface
         $data->culture  = $this->culture;
 
         try{
-            $raw = $this->soap->GetBarcodeInfo($barcode)->GetBarcodeInfoResult;
+            $raw = $this->soap->GetBarcodeInfo($data)->GetBarcodeInfoResult;
         } catch (\Exception $e) {
             throw new TrackException($e->getMessage(), $e->getCode());
         }
@@ -64,8 +64,9 @@ class Ukrposhta implements AdapterInterface
         // Prepare result info:
         $result                 = new TrackResult();
         $result->barcode        = $raw->barcode;
-        $result->status_code    = $raw->code;
+        $result->status_code    = (int)$raw->code;
         $result->status_message = $raw->eventdescription;
+        $result->found          = !empty($result->status_code);
 
         // Prepare additional info:
         $result->additional = [
