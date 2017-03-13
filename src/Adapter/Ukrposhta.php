@@ -72,7 +72,7 @@ class Ukrposhta implements AdapterInterface
         $result->additional = [
             'lastofficeindex' => $raw->lastofficeindex,
             'lastoffice' => $raw->lastoffice,
-            'eventdate' => $raw->eventdate
+            'eventdate' => $raw->eventdate ?? null
         ];
 
         return $result;
