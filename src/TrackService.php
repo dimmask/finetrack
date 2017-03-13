@@ -32,16 +32,18 @@ class TrackService
      * Make api adapter instance
      *
      * @param $name
+     * @param array Configuration settings for adapter to be overriden
+     *
      * @return AdapterInterface
      * @throws InvalidTrackAdapterException
      */
-    protected function makeAdapter($name): AdapterInterface
+    public function makeAdapter($name, $cfg_override = []): AdapterInterface
     {
         $adapter_class = self::ADAPTER_NAMESPACE . ucfirst($name);
         if(class_exists($adapter_class)){
             $reflection_class = new \ReflectionClass($adapter_class);
             if($reflection_class->implementsInterface(self::ADAPTER_NAMESPACE . 'AdapterInterface')){
-                $args = $this->config[$name] ?? array();
+                $args = array_merge($this->config[$name] ?? array(), $cfg_override);
                 $adapter = $reflection_class->newInstanceArgs($args);
             } else {
                 throw new InvalidTrackAdapterException(sprintf('Class [%s] should implement AdapterInterface', $adapter_class));
